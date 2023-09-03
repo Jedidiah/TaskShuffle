@@ -12,11 +12,63 @@ generator client {
 // to create migrations for them and apply to your dev DB.
 // TODO: Please remove the following example:
 model User {
-  id                  String    @id @default(uuid())
-  email               String    @unique
+  id                  String     @id @default(uuid())
+  email               String     @unique
   name                String?
   hashedPassword      String
   salt                String
   resetToken          String?
   resetTokenExpiresAt DateTime?
+  lists               List[]
+  listItems           ListItem[]
+}
+
+// enum ListType {
+//   Default
+//   Task
+//   Media
+//   Recipie
+//   CreativePrompt
+//   Multilist
+//   Activity
+//   Pomodoro
+// }
+
+model List {
+  id          String        @id @default(uuid())
+  title       String?
+  description String?
+  createdAt   DateTime      @default(now())
+  createdBy   User          @relation(fields: [userId], references: [id])
+  items       ListItem[]
+  userId      String
+  webhook     String?
+  url         String?
+  isPrivate   Boolean       @default(false)
+  skipLimit   Int?          @default(0)
+  // listType    String? @default("Default")  //ListType
+  // properties  String?
+  ListItemTag ListItemTag[]
+}
+
+model ListItem {
+  id            String       @id @default(uuid())
+  title         String?
+  description   String?
+  createdAt     DateTime     @default(now())
+  createdBy     User         @relation(fields: [userId], references: [id])
+  userId        String
+  listId        String
+  list          List         @relation(fields: [listId], references: [id])
+  webhook       String?
+  ListItemTag   ListItemTag? @relation(fields: [listItemTagId], references: [id])
+  listItemTagId String?
+}
+
+model ListItemTag {
+  id       String     @id @default(uuid())
+  title    String
+  list     List       @relation(fields: [listId], references: [id])
+  listId   String
+  ListItem ListItem[]
 }
