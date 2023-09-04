@@ -48,7 +48,7 @@ export const Success = ({ list }: CellSuccessProps<EditListById>) => {
   const [updateList, { loading, error }] = useMutation(UPDATE_LIST_MUTATION, {
     onCompleted: () => {
       toast.success('List updated')
-      navigate(routes.lists())
+      navigate(routes.shuffles())
     },
     onError: (error) => {
       toast.error(error.message)

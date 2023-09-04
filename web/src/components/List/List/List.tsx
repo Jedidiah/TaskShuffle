@@ -1,10 +1,10 @@
+import type { DeleteListMutationVariables, FindListById } from 'types/graphql'
+
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { checkboxInputTag, timeTag } from 'src/lib/formatters'
-
-import type { DeleteListMutationVariables, FindListById } from 'types/graphql'
 
 const DELETE_LIST_MUTATION = gql`
   mutation DeleteListMutation($id: String!) {
@@ -22,7 +22,7 @@ const List = ({ list }: Props) => {
   const [deleteList] = useMutation(DELETE_LIST_MUTATION, {
     onCompleted: () => {
       toast.success('List deleted')
-      navigate(routes.lists())
+      navigate(routes.shuffles())
     },
     onError: (error) => {
       toast.error(error.message)

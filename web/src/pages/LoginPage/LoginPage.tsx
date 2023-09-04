@@ -20,7 +20,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(routes.lists())
+      navigate(routes.shuffles())
     }
   }, [isAuthenticated])
 

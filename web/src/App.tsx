@@ -1,3 +1,8 @@
+import {
+  defaultTheme,
+  Provider as SpectrumProvider,
+} from '@adobe/react-spectrum'
+
 import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web'
 import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
 
@@ -12,11 +17,17 @@ import './index.css'
 const App = () => (
   <FatalErrorBoundary page={FatalErrorPage}>
     <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
-      <AuthProvider>
-        <RedwoodApolloProvider useAuth={useAuth}>
-          <Routes />
-        </RedwoodApolloProvider>
-      </AuthProvider>
+      <SpectrumProvider
+        theme={defaultTheme}
+        defaultColorScheme="light"
+        colorScheme="light"
+      >
+        <AuthProvider>
+          <RedwoodApolloProvider useAuth={useAuth}>
+            <Routes />
+          </RedwoodApolloProvider>
+        </AuthProvider>
+      </SpectrumProvider>
     </RedwoodProvider>
   </FatalErrorBoundary>
 )

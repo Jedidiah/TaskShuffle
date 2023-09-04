@@ -1,10 +1,10 @@
+import type { CreateListInput } from 'types/graphql'
+
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import ListForm from 'src/components/List/ListForm'
-
-import type { CreateListInput } from 'types/graphql'
 
 const CREATE_LIST_MUTATION = gql`
   mutation CreateListMutation($input: CreateListInput!) {
@@ -18,7 +18,7 @@ const NewList = () => {
   const [createList, { loading, error }] = useMutation(CREATE_LIST_MUTATION, {
     onCompleted: () => {
       toast.success('List created')
-      navigate(routes.lists())
+      navigate(routes.shuffles())
     },
     onError: (error) => {
       toast.error(error.message)

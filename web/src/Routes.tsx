@@ -12,16 +12,17 @@ import { Set, Router, Route, Private } from '@redwoodjs/router'
 import ScaffoldLayout from 'src/layouts/ScaffoldLayout'
 
 import { useAuth } from './auth'
+import LoggedInLayout from './layouts/LoggedInLayout/LoggedInLayout'
 
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
-      <Private unauthenticated="home">
-        <Set wrap={ScaffoldLayout} title="Lists" titleTo="lists" buttonLabel="New List" buttonTo="newList">
-          <Route path="/lists/new" page={ListNewListPage} name="newList" />
-          <Route path="/lists/{id}/edit" page={ListEditListPage} name="editList" />
-          <Route path="/lists/{id}" page={ListListPage} name="list" />
-          <Route path="/lists" page={ListListsPage} name="lists" />
+      <Private wrap={LoggedInLayout} unauthenticated="home">
+        <Set wrap={ScaffoldLayout} title="Shuffles" titleTo="shuffles" buttonLabel="New Shuffle" buttonTo="newList">
+          <Route path="/shuffles/new" page={ListNewListPage} name="newList" />
+          <Route path="/shuffles/{id}/edit" page={ListEditListPage} name="editList" />
+          <Route path="/shuffles/{id}" page={ListListPage} name="shuffle" />
+          <Route path="/shuffles" page={ListListsPage} name="shuffles" />
         </Set>
       </Private>
 
