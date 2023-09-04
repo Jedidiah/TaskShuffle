@@ -24,9 +24,10 @@ describe('lists', () => {
 
   scenario('creates a list', async (scenario: StandardScenario) => {
     const result = await createList({
-      input: { userId: scenario.list.two.userId },
+      input: { title: 'String', userId: scenario.list.two.userId },
     })
 
+    expect(result.title).toEqual('String')
     expect(result.userId).toEqual(scenario.list.two.userId)
   })
 
@@ -34,10 +35,10 @@ describe('lists', () => {
     const original = (await list({ id: scenario.list.one.id })) as List
     const result = await updateList({
       id: original.id,
-      input: { userId: scenario.list.two.userId },
+      input: { title: 'String2' },
     })
 
-    expect(result.userId).toEqual(scenario.list.two.userId)
+    expect(result.title).toEqual('String2')
   })
 
   scenario('deletes a list', async (scenario: StandardScenario) => {

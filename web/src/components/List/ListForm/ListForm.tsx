@@ -1,3 +1,5 @@
+import type { EditListById, UpdateListInput } from 'types/graphql'
+
 import {
   Form,
   FormError,
@@ -8,8 +10,6 @@ import {
   NumberField,
   Submit,
 } from '@redwoodjs/forms'
-
-import type { EditListById, UpdateListInput } from 'types/graphql'
 import type { RWGqlError } from '@redwoodjs/forms'
 
 type FormList = NonNullable<EditListById['list']>
@@ -49,6 +49,7 @@ const ListForm = (props: ListFormProps) => {
           defaultValue={props.list?.title}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
+          required
         />
 
         <FieldError name="title" className="rw-field-error" />
@@ -69,24 +70,6 @@ const ListForm = (props: ListFormProps) => {
         />
 
         <FieldError name="description" className="rw-field-error" />
-
-        <Label
-          name="userId"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          User id
-        </Label>
-
-        <TextField
-          name="userId"
-          defaultValue={props.list?.userId}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-        />
-
-        <FieldError name="userId" className="rw-field-error" />
 
         <Label
           name="webhook"

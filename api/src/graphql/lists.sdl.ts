@@ -1,7 +1,7 @@
 export const schema = gql`
   type List {
     id: String!
-    title: String
+    title: String!
     description: String
     createdAt: DateTime!
     createdBy: User!
@@ -20,9 +20,8 @@ export const schema = gql`
   }
 
   input CreateListInput {
-    title: String
+    title: String!
     description: String
-    userId: String!
     webhook: String
     url: String
     isPrivate: Boolean!
@@ -30,9 +29,8 @@ export const schema = gql`
   }
 
   input UpdateListInput {
-    title: String
+    title: String!
     description: String
-    userId: String
     webhook: String
     url: String
     isPrivate: Boolean

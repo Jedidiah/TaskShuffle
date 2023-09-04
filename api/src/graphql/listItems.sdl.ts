@@ -1,7 +1,7 @@
 export const schema = gql`
   type ListItem {
     id: String!
-    title: String
+    title: String!
     description: String
     createdAt: DateTime!
     createdBy: User!
@@ -9,8 +9,7 @@ export const schema = gql`
     listId: String!
     list: List!
     webhook: String
-    ListItemTag: ListItemTag
-    listItemTagId: String
+    tags: [ListItemTag]!
   }
 
   type Query {
@@ -19,12 +18,11 @@ export const schema = gql`
   }
 
   input CreateListItemInput {
-    title: String
+    title: String!
     description: String
     userId: String!
     listId: String!
     webhook: String
-    listItemTagId: String
   }
 
   input UpdateListItemInput {
@@ -33,7 +31,6 @@ export const schema = gql`
     userId: String
     listId: String
     webhook: String
-    listItemTagId: String
   }
 
   type Mutation {

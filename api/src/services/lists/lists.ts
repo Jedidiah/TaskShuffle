@@ -7,7 +7,11 @@ import type {
 import { db } from 'src/lib/db'
 
 export const lists: QueryResolvers['lists'] = () => {
-  return db.list.findMany()
+  return db.list.findMany({
+    where: {
+      userId: context.currentUser.id,
+    },
+  })
 }
 
 export const list: QueryResolvers['list'] = ({ id }) => {
@@ -18,14 +22,14 @@ export const list: QueryResolvers['list'] = ({ id }) => {
 
 export const createList: MutationResolvers['createList'] = ({ input }) => {
   return db.list.create({
-    data: input,
+    data: { ...input, userId: context.currentUser.id },
   })
 }
 
 export const updateList: MutationResolvers['updateList'] = ({ id, input }) => {
   return db.list.update({
-    data: input,
-    where: { id },
+    data: { ...input, userId: context.currentUser.id },
+    where: { id, userId: context.currentUser.id },
   })
 }
 

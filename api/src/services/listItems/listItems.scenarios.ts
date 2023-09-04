@@ -5,18 +5,20 @@ export const standard = defineScenario<Prisma.ListItemCreateArgs>({
   listItem: {
     one: {
       data: {
+        title: 'String',
         createdBy: {
           create: {
-            email: 'String8355624',
+            email: 'String1164382',
             hashedPassword: 'String',
             salt: 'String',
           },
         },
         list: {
           create: {
+            title: 'String',
             createdBy: {
               create: {
-                email: 'String4511230',
+                email: 'String7937274',
                 hashedPassword: 'String',
                 salt: 'String',
               },
@@ -27,18 +29,20 @@ export const standard = defineScenario<Prisma.ListItemCreateArgs>({
     },
     two: {
       data: {
+        title: 'String',
         createdBy: {
           create: {
-            email: 'String209405',
+            email: 'String3016779',
             hashedPassword: 'String',
             salt: 'String',
           },
         },
         list: {
           create: {
+            title: 'String',
             createdBy: {
               create: {
-                email: 'String2226295',
+                email: 'String6143717',
                 hashedPassword: 'String',
                 salt: 'String',
               },
