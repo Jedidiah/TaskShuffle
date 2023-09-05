@@ -1,6 +1,7 @@
+import { Breadcrumbs, Flex, Item, View } from '@adobe/react-spectrum'
 import type { CreateListInput } from 'types/graphql'
 
-import { navigate, routes } from '@redwoodjs/router'
+import { Link, navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
@@ -16,28 +17,57 @@ const CREATE_LIST_MUTATION = gql`
 
 const NewList = () => {
   const [createList, { loading, error }] = useMutation(CREATE_LIST_MUTATION, {
-    onCompleted: () => {
-      toast.success('List created')
-      navigate(routes.shuffles())
+    onCompleted: ({ createList }) => {
+      toast.success('Shuffle created')
+      navigate(routes.editList({ id: createList.id }))
     },
     onError: (error) => {
       toast.error(error.message)
     },
   })
 
-  const onSave = (input: CreateListInput) => {
-    createList({ variables: { input } })
+  const onSave = async (input: CreateListInput) => {
+    const list = await createList({ variables: { input } })
   }
 
   return (
-    <div className="rw-segment">
-      <header className="rw-segment-header">
-        <h2 className="rw-heading rw-heading-secondary">New List</h2>
-      </header>
-      <div className="rw-segment-main">
-        <ListForm onSave={onSave} loading={loading} error={error} />
+    <>
+      <View
+        backgroundColor={'gray-50'}
+        // position={'sticky'}
+        top={0}
+        borderBottomWidth={'thin'}
+        borderBottomColor={'gray-300'}
+        marginBottom={'size-200'}
+      >
+        <Flex
+          direction={'row'}
+          minHeight={'48px'}
+          alignItems={'center'}
+          // justifyContent={'space-between'}
+        >
+          <Breadcrumbs size="L" flexGrow={1}>
+            <Item key="home">
+              <Link to={routes.shuffles()}>Shuffles</Link>
+            </Item>
+            <Item key="new">New Shuffle</Item>
+          </Breadcrumbs>
+        </Flex>
+      </View>
+      <div className="rw-segment">
+        <header className="rw-segment-header">
+          <h2 className="rw-heading rw-heading-secondary">New List</h2>
+        </header>
+        <div className="rw-segment-main">
+          <ListForm
+            onSave={onSave}
+            loading={loading}
+            error={error}
+            isCreating
+          />
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

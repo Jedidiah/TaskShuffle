@@ -18,13 +18,13 @@ const Routes = () => {
   return (
     <Router useAuth={useAuth}>
       <Private wrap={LoggedInLayout} unauthenticated="home">
-        <Set wrap={ScaffoldLayout} title="Shuffles" titleTo="shuffles" buttonLabel="New Shuffle" buttonTo="newList">
-          <Route path="/shuffles/new" page={ListNewListPage} name="newList" />
-          <Route path="/shuffles/{id}/edit" page={ListEditListPage} name="editList" />
-          <Route path="/shuffles/{id}" page={ListListPage} name="shuffle" />
-          <Route path="/shuffles" page={ListListsPage} name="shuffles" />
-        </Set>
+        {/* <Set wrap={ScaffoldLayout} title="Shuffles" titleTo="shuffles" buttonLabel="New Shuffle" buttonTo="newList"> */}
+        <Route path="/shuffles/new" page={ListNewListPage} name="newList" />
+        <Route path="/shuffles/{id}/edit" page={ListEditListPage} name="editList" />
+        <Route path="/shuffles" page={ListListsPage} name="shuffles" />
+        {/* </Set> */}
       </Private>
+      <Route path="/shuffles/{id}" page={ListListPage} name="shuffle" />
 
       <Route path="/" page={HomePage} name="home" />
       <Route path="/login" page={LoginPage} name="login" />

@@ -61,8 +61,9 @@ const LoggedInLayout = ({ children }: LayoutProps) => {
             </MenuTrigger>
           </Flex>
         </View>
+        <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
       </Provider>
-      <View backgroundColor={'static-gray-50'} overflow={'auto'}>
+      <View backgroundColor={'gray-200'} overflow={'auto'}>
         {children}
       </View>
       <View>Footer</View>

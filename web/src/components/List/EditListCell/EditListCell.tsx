@@ -1,6 +1,7 @@
+import { Breadcrumbs, Flex, Item, View } from '@adobe/react-spectrum'
 import type { EditListById, UpdateListInput } from 'types/graphql'
 
-import { navigate, routes } from '@redwoodjs/router'
+import { Link, navigate, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
@@ -60,15 +61,44 @@ export const Success = ({ list }: CellSuccessProps<EditListById>) => {
   }
 
   return (
-    <div className="rw-segment">
-      <header className="rw-segment-header">
-        <h2 className="rw-heading rw-heading-secondary">
-          Edit List {list?.id}
-        </h2>
-      </header>
-      <div className="rw-segment-main">
-        <ListForm list={list} onSave={onSave} error={error} loading={loading} />
+    <>
+      <View
+        backgroundColor={'gray-50'}
+        // position={'sticky'}
+        top={0}
+        borderBottomWidth={'thin'}
+        borderBottomColor={'gray-300'}
+        marginBottom={'size-200'}
+      >
+        <Flex
+          direction={'row'}
+          minHeight={'48px'}
+          alignItems={'center'}
+          // justifyContent={'space-between'}
+        >
+          <Breadcrumbs size="L" flexGrow={1}>
+            <Item key="home">
+              <Link to={routes.shuffles()}>Shuffles</Link>
+            </Item>
+            <Item key="edit">{`Editing '${list.title}'`}</Item>
+          </Breadcrumbs>
+        </Flex>
+      </View>
+      <div className="rw-segment">
+        {/* <header className="rw-segment-header">
+          <h2 className="rw-heading rw-heading-secondary">
+            Edit List {list?.id}
+          </h2>
+        </header> */}
+        <div className="rw-segment-main">
+          <ListForm
+            list={list}
+            onSave={onSave}
+            error={error}
+            loading={loading}
+          />
+        </div>
       </div>
-    </div>
+    </>
   )
 }
