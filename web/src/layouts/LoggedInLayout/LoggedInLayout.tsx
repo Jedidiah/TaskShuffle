@@ -38,8 +38,8 @@ const LoggedInLayout = ({ children }: LayoutProps) => {
   return (
     <Grid
       height={'100vh'}
-      areas={['header', 'content', 'footer']}
-      rows={['size-900', 'auto', 'size-1000']}
+      areas={['header', 'content']}
+      rows={['size-900', 'auto']}
       columnGap={0}
     >
       <Provider colorScheme="dark">
@@ -64,9 +64,9 @@ const LoggedInLayout = ({ children }: LayoutProps) => {
         <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
       </Provider>
       <View backgroundColor={'gray-200'} overflow={'auto'}>
-        {children}
+        <View minHeight="90vh">{children}</View>
+        <View>Footer</View>
       </View>
-      <View>Footer</View>
     </Grid>
   )
 }

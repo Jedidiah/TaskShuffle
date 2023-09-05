@@ -1,14 +1,17 @@
 import { useState } from 'react'
 
 import {
+  ActionMenu,
   Button,
   Checkbox,
   Content,
   ContextualHelp,
-  Divider,
   Flex,
   Form,
   Heading,
+  IllustratedMessage,
+  Item,
+  ListView,
   NumberField,
   Switch,
   Text,
@@ -17,6 +20,9 @@ import {
   View,
   Well,
 } from '@adobe/react-spectrum'
+import NoSearchResults from '@spectrum-icons/illustrations/File'
+import Delete from '@spectrum-icons/workflow/Delete'
+import Edit from '@spectrum-icons/workflow/Edit'
 import type { EditListById, UpdateListInput } from 'types/graphql'
 
 // import {
@@ -29,7 +35,7 @@ import type { EditListById, UpdateListInput } from 'types/graphql'
 //   NumberField,
 //   Submit,
 // } from '@redwoodjs/forms'
-import { FormError, type RWGqlError, FieldError } from '@redwoodjs/forms'
+import { FormError, type RWGqlError } from '@redwoodjs/forms'
 
 type FormList = NonNullable<EditListById['list']>
 
@@ -46,6 +52,20 @@ const ListForm = (props: ListFormProps) => {
 
   const onSubmit = (data: Partial<FormList>) => {
     props.onSave(data, props?.list?.id)
+  }
+
+  const renderEmptyState = () => {
+    return (
+      <IllustratedMessage width="100%" minHeight="size-3600">
+        <NoSearchResults />
+        <Heading>No Items</Heading>
+
+        <Content>This Shuffle doesn&rsquo;t have any items yet.</Content>
+        <Button marginTop="size-300" variant="cta">
+          Create One
+        </Button>
+      </IllustratedMessage>
+    )
   }
 
   return (
@@ -162,7 +182,39 @@ const ListForm = (props: ListFormProps) => {
           </Button>
         </Form>
       </View>
-      {!props.isCreating && <View>List</View>}
+      {!props.isCreating && (
+        <View
+          flexGrow={1}
+          minHeight="size-4600"
+          marginX="size-1000"
+          marginY="size-500"
+        >
+          <ListView
+            // maxWidth="size-6000"
+            aria-label="ListView example with complex items"
+            onAction={(key) => alert(`Triggering action on item ${key}`)}
+            renderEmptyState={renderEmptyState}
+            minHeight="size-4600"
+          >
+            {props.list.items.map((item) => (
+              <Item key={item.id} textValue="Utilities" hasChildItems>
+                <Text>Utilities</Text>
+                <Text slot="description">16 items</Text>
+                <ActionMenu>
+                  <Item key="edit" textValue="Edit">
+                    <Edit />
+                    <Text>Edit</Text>
+                  </Item>
+                  <Item key="delete" textValue="Delete">
+                    <Delete />
+                    <Text>Delete</Text>
+                  </Item>
+                </ActionMenu>
+              </Item>
+            ))}
+          </ListView>
+        </View>
+      )}
     </Flex>
   )
 }

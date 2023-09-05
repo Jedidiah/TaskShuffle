@@ -7893,6 +7893,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@spectrum-icons/illustrations@npm:^3.6.4":
+  version: 3.6.4
+  resolution: "@spectrum-icons/illustrations@npm:3.6.4"
+  dependencies:
+    "@react-aria/utils": ^3.19.0
+    "@react-spectrum/icon": ^3.7.4
+    "@swc/helpers": ^0.5.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
+  checksum: 107a6c732437d7596fe761e0db62710c6bb3843e19aba6c1389ed502882a0c44238cee6cfa4712137fe3bd3ecd63c62161e26da9bcfa7bb0217780eae8fba005
+  languageName: node
+  linkType: hard
+
 "@spectrum-icons/ui@npm:^3.5.4":
   version: 3.5.4
   resolution: "@spectrum-icons/ui@npm:3.5.4"
@@ -20949,6 +20962,7 @@ __metadata:
     "@adobe/react-spectrum": ^3.29.0
     "@redwoodjs/auth-dbauth-setup": 6.1.1
     "@redwoodjs/core": 6.1.1
+    "@spectrum-icons/illustrations": ^3.6.4
     "@spectrum-icons/workflow": ^4.2.3
   languageName: unknown
   linkType: soft

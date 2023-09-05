@@ -20,6 +20,11 @@ export const QUERY = gql`
       url
       isPrivate
       skipLimit
+      items {
+        id
+        title
+        description
+      }
     }
   }
 `
@@ -84,21 +89,14 @@ export const Success = ({ list }: CellSuccessProps<EditListById>) => {
           </Breadcrumbs>
         </Flex>
       </View>
-      <div className="rw-segment">
-        {/* <header className="rw-segment-header">
-          <h2 className="rw-heading rw-heading-secondary">
-            Edit List {list?.id}
-          </h2>
-        </header> */}
-        <div className="rw-segment-main">
-          <ListForm
-            list={list}
-            onSave={onSave}
-            error={error}
-            loading={loading}
-          />
-        </div>
-      </div>
+      <View
+        borderRadius="regular"
+        margin="size-200"
+        backgroundColor="gray-50"
+        padding="size-200"
+      >
+        <ListForm list={list} onSave={onSave} error={error} loading={loading} />
+      </View>
     </>
   )
 }
