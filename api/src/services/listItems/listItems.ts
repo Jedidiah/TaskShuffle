@@ -6,8 +6,8 @@ import type {
 
 import { db } from 'src/lib/db'
 
-export const listItems: QueryResolvers['listItems'] = () => {
-  return db.listItem.findMany()
+export const listItems: QueryResolvers['listItems'] = ({ listId }) => {
+  return db.listItem.findMany({ where: { listId } })
 }
 
 export const listItem: QueryResolvers['listItem'] = ({ id }) => {
@@ -20,7 +20,7 @@ export const createListItem: MutationResolvers['createListItem'] = ({
   input,
 }) => {
   return db.listItem.create({
-    data: input,
+    data: { ...input, userId: context.currentUser.id },
   })
 }
 
@@ -29,7 +29,7 @@ export const updateListItem: MutationResolvers['updateListItem'] = ({
   input,
 }) => {
   return db.listItem.update({
-    data: input,
+    data: { ...input, userId: context.currentUser.id },
     where: { id },
   })
 }

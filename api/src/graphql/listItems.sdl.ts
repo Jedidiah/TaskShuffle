@@ -5,32 +5,32 @@ export const schema = gql`
     description: String
     createdAt: DateTime!
     createdBy: User!
-    userId: String!
     listId: String!
     list: List!
     webhook: String
+    url: String
     tags: [ListItemTag]!
   }
 
   type Query {
-    listItems: [ListItem!]! @requireAuth
+    listItems(listId: String!): [ListItem!]! @requireAuth
     listItem(id: String!): ListItem @requireAuth
   }
 
   input CreateListItemInput {
     title: String!
     description: String
-    userId: String!
     listId: String!
     webhook: String
+    url: String
   }
 
   input UpdateListItemInput {
     title: String
     description: String
-    userId: String
     listId: String
     webhook: String
+    url: String
   }
 
   type Mutation {

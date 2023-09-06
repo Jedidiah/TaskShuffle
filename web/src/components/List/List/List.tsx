@@ -61,10 +61,7 @@ const List = ({ list }: Props) => {
               <th>Created at</th>
               <td>{timeTag(list.createdAt)}</td>
             </tr>
-            <tr>
-              <th>User id</th>
-              <td>{list.userId}</td>
-            </tr>
+
             <tr>
               <th>Webhook</th>
               <td>{list.webhook}</td>

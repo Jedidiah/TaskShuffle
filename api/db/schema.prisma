@@ -42,12 +42,11 @@ model List {
   createdBy   User          @relation(fields: [userId], references: [id])
   items       ListItem[]
   userId      String
-  webhook     String?
-  url         String?
   isPrivate   Boolean       @default(false)
   skipLimit   Int?          @default(0)
   // listType    String? @default("Default")  //ListType
-  // properties  String?
+  theme  String?
+  themeProperties  String?
   ListItemTag ListItemTag[]
 }
 
@@ -61,6 +60,7 @@ model ListItem {
   listId      String
   list        List          @relation(fields: [listId], references: [id])
   webhook     String?
+  url         String?
   tags        ListItemTag[]
 }
 

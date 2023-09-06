@@ -12,7 +12,6 @@ export const QUERY = gql`
       title
       description
       createdAt
-      userId
       webhook
       url
       isPrivate

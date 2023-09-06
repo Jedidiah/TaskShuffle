@@ -24,7 +24,7 @@ type LayoutProps = {
 }
 
 const LoggedInLayout = ({ children }: LayoutProps) => {
-  const { logOut } = useAuth()
+  const { logOut, currentUser } = useAuth()
 
   const handleUserMenuAction = useCallback(
     (key: string) => {
@@ -52,7 +52,7 @@ const LoggedInLayout = ({ children }: LayoutProps) => {
             <Heading level={1}>TaskShuffle</Heading>
             <MenuTrigger>
               <ActionButton>
-                <User /> <Text>Nicolette 🞃</Text>
+                <User /> <Text>{currentUser.id} 🞃</Text>
               </ActionButton>
               <Menu onAction={handleUserMenuAction}>
                 <Item key="settings">Settings</Item>

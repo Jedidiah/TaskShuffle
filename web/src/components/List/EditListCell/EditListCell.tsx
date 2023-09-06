@@ -15,7 +15,6 @@ export const QUERY = gql`
       title
       description
       createdAt
-      userId
       webhook
       url
       isPrivate
@@ -35,7 +34,6 @@ const UPDATE_LIST_MUTATION = gql`
       title
       description
       createdAt
-      userId
       webhook
       url
       isPrivate
