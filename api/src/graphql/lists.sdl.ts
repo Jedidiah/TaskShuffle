@@ -40,6 +40,8 @@ export const schema = gql`
   type Mutation {
     createList(input: CreateListInput!): List! @requireAuth
     updateList(id: String!, input: UpdateListInput!): List! @requireAuth
+    shuffleList(id: String!): List! @requireAuth
+    nextFromList(id: String!): List! @requireAuth
     deleteList(id: String!): List! @requireAuth
   }
 `

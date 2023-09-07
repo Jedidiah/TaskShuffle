@@ -15,6 +15,7 @@ export const QUERY = gql`
       url
       isPrivate
       skipLimit
+      order
     }
   }
 `
@@ -28,5 +29,10 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = ({ list }: CellSuccessProps<FindListById>) => {
-  return <List list={list} />
+  return (
+    <>
+      {list.order}
+      <List list={list} />
+    </>
+  )
 }

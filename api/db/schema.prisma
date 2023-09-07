@@ -44,6 +44,7 @@ model List {
   userId      String
   isPrivate   Boolean       @default(false)
   skipLimit   Int?          @default(0)
+  order       String        @default("")
   // listType    String? @default("Default")  //ListType
   theme  String?
   themeProperties  String?

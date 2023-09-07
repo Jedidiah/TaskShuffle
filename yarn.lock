@@ -20964,6 +20964,7 @@ __metadata:
     "@redwoodjs/core": 6.1.1
     "@spectrum-icons/illustrations": ^3.6.4
     "@spectrum-icons/workflow": ^4.2.3
+    lodash: ^4.17.21
   languageName: unknown
   linkType: soft
 
