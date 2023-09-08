@@ -21,12 +21,6 @@ const Routes = () => {
         <Route path="/shuffles/new" page={ListNewListPage} name="newList" />
         <Route path="/shuffles/{id}/edit" page={ListEditListPage} name="editList" />
         <Route path="/shuffles" page={ListListsPage} name="shuffles" />
-        {/* <Set wrap={ScaffoldLayout} title="ListItems" titleTo="listItems" buttonLabel="New ListItem" buttonTo="newListItem">
-          <Route path="/list-items/new" page={ListItemNewListItemPage} name="newListItem" />
-          <Route path="/list-items/{id}/edit" page={ListItemEditListItemPage} name="editListItem" />
-          <Route path="/list-items/{id}" page={ListItemListItemPage} name="listItem" />
-          <Route path="/list-items" page={ListItemListItemsPage} name="listItems" />
-        </Set> */}
       </Private>
       <Route path="/shuffles/{id}" page={ListListPage} name="shuffle" />
 
