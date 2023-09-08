@@ -14,6 +14,7 @@ import {
 } from '@adobe/react-spectrum'
 import User from '@spectrum-icons/workflow/User'
 
+import { Link, routes } from '@redwoodjs/router'
 import { Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
@@ -48,7 +49,9 @@ const LoggedInLayout = ({ children }: LayoutProps) => {
             alignItems={'center'}
             justifyContent={'space-between'}
           >
-            <Heading level={1}>Shuffle</Heading>
+            <Link to={routes.shuffles()}>
+              <Heading level={1}>Shuffle</Heading>
+            </Link>
             <MenuTrigger>
               <ActionButton>
                 <User /> <Text>{currentUser.name ?? currentUser.id} 🞃</Text>
