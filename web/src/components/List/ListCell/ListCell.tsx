@@ -1,6 +1,6 @@
 import type { FindListById } from 'types/graphql'
 
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import { type CellSuccessProps, type CellFailureProps } from '@redwoodjs/web'
 
 import List from 'src/components/List/List'
 
@@ -15,7 +15,6 @@ export const QUERY = gql`
       url
       isPrivate
       skipLimit
-      order
     }
   }
 `
@@ -31,7 +30,6 @@ export const Failure = ({ error }: CellFailureProps) => (
 export const Success = ({ list }: CellSuccessProps<FindListById>) => {
   return (
     <>
-      {list.order}
       <List list={list} />
     </>
   )

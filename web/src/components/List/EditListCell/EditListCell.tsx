@@ -1,5 +1,22 @@
-import { Breadcrumbs, Flex, Item, View } from '@adobe/react-spectrum'
-import type { EditListById, UpdateListInput } from 'types/graphql'
+import {
+  ActionGroup,
+  Breadcrumbs,
+  Flex,
+  Item,
+  Text,
+  View,
+  Link as SpectrumLink,
+  ActionButton,
+} from '@adobe/react-spectrum'
+import Delete from '@spectrum-icons/workflow/Delete'
+import Edit from '@spectrum-icons/workflow/Edit'
+import OpenIn from '@spectrum-icons/workflow/OpenIn'
+import Share from '@spectrum-icons/workflow/Share'
+import type {
+  DeleteListMutationVariables,
+  EditListById,
+  UpdateListInput,
+} from 'types/graphql'
 
 import { Link, navigate, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
@@ -7,6 +24,8 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import ListForm from 'src/components/List/ListForm'
+
+import { DELETE_LIST_MUTATION } from '../Lists'
 
 export const QUERY = gql`
   query EditListById($id: String!) {
@@ -63,11 +82,34 @@ export const Success = ({ list }: CellSuccessProps<EditListById>) => {
     updateList({ variables: { id, input } })
   }
 
+  const [deleteList] = useMutation(DELETE_LIST_MUTATION, {
+    onCompleted: () => {
+      toast.success('List deleted')
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+    // This refetches the query on the list page. Read more about other ways to
+    // update the cache over here:
+    // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
+    refetchQueries: [{ query: QUERY }],
+    awaitRefetchQueries: true,
+  })
+
+  const onDeleteClick = () => {
+    if (
+      confirm(
+        `Are you sure you want to delete the shuffle '${list.title}' and its ${list.items.length} items? You can not undo this.`
+      )
+    ) {
+      deleteList({ variables: { id: list.id } })
+    }
+  }
+
   return (
     <>
       <View
         backgroundColor={'gray-50'}
-        // position={'sticky'}
         top={0}
         borderBottomWidth={'thin'}
         borderBottomColor={'gray-300'}
@@ -77,7 +119,7 @@ export const Success = ({ list }: CellSuccessProps<EditListById>) => {
           direction={'row'}
           minHeight={'48px'}
           alignItems={'center'}
-          // justifyContent={'space-between'}
+          marginX={10}
         >
           <Breadcrumbs size="L" flexGrow={1}>
             <Item key="home">
@@ -85,6 +127,42 @@ export const Success = ({ list }: CellSuccessProps<EditListById>) => {
             </Item>
             <Item key="edit">{`Editing '${list.title}'`}</Item>
           </Breadcrumbs>
+          <SpectrumLink isQuiet variant="secondary">
+            <Link
+              style={{
+                padding: '0 10px',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                fontSize: '14px',
+                fontFamily:
+                  'adobe-clean, Source Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Trebuchet MS, Lucida Grande, sans-serif',
+              }}
+              to={routes.shuffle({ id: list.id })}
+            >
+              <OpenIn size="S" marginEnd="size-50" />
+              <Text>View Shuffle</Text>
+            </Link>
+          </SpectrumLink>
+
+          <ActionButton
+            isQuiet
+            onPress={() => {
+              navigator.share({
+                title: list.title,
+                text: list.description,
+                url: routes.shuffle({ id: list.id }),
+              })
+            }}
+            key="delete"
+          >
+            <Share />
+            <Text>Share</Text>
+          </ActionButton>
+          <ActionButton isQuiet onPress={onDeleteClick} key="delete">
+            <Delete />
+            <Text>Delete</Text>
+          </ActionButton>
         </Flex>
       </View>
       <View

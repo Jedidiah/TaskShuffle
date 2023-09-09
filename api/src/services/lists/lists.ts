@@ -30,12 +30,12 @@ export const createList: MutationResolvers['createList'] = ({ input }) => {
 }
 
 export const shuffleList: MutationResolvers['shuffleList'] = async ({ id }) => {
-  const currentListItems = await listItems({ listId: id })
+  const currentListItems = await db.listItem.findMany({ where: { listId: id } })
   const itemIds = currentListItems?.map((i) => i.id)
 
   return db.list.update({
     data: { order: JSON.stringify(shuffle(itemIds)) },
-    where: { id, userId: context.currentUser.id },
+    where: { id },
   })
 }
 
@@ -49,13 +49,14 @@ export const updateList: MutationResolvers['updateList'] = ({ id, input }) => {
 export const nextItemFromList: MutationResolvers['nextFromList'] = async ({
   id,
 }) => {
-  const currentList = await list({ id })
+  const currentList = await db.list.findUnique({ where: { id } })
+
   const [nextItem, ...newOrder] = JSON.parse(currentList.order)
 
   if (newOrder.length >= 1) {
     await db.list.update({
       data: { order: JSON.stringify(newOrder) },
-      where: { id, userId: context.currentUser.id },
+      where: { id },
     })
   } else {
     await shuffleList({ id })

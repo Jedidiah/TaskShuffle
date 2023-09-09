@@ -1,101 +1,177 @@
-import type { DeleteListMutationVariables, FindListById } from 'types/graphql'
+import { useCallback, useState } from 'react'
 
-import { Link, routes, navigate } from '@redwoodjs/router'
-import { useMutation } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
+import {
+  Flex,
+  Tooltip,
+  TooltipTrigger,
+  Link as SpectrumLink,
+} from '@adobe/react-spectrum'
+import Home from '@spectrum-icons/workflow/Home'
+import Settings from '@spectrum-icons/workflow/Settings'
+import type { FindListById, List, ListItem } from 'types/graphql'
 
-import { checkboxInputTag, timeTag } from 'src/lib/formatters'
+import { Link, routes } from '@redwoodjs/router'
 
-const DELETE_LIST_MUTATION = gql`
-  mutation DeleteListMutation($id: String!) {
-    deleteList(id: $id) {
-      id
-    }
-  }
-`
+import { useAuth } from 'src/auth'
+
+import Embed from './Embeds'
 
 interface Props {
   list: NonNullable<FindListById['list']>
 }
 
-const List = ({ list }: Props) => {
-  const [deleteList] = useMutation(DELETE_LIST_MUTATION, {
-    onCompleted: () => {
-      toast.success('List deleted')
-      navigate(routes.shuffles())
-    },
-    onError: (error) => {
-      toast.error(error.message)
-    },
-  })
+const Intro = ({
+  list,
+  fetchItem,
+}: {
+  list: NonNullable<FindListById['list']>
+  fetchItem: () => void
+}) => {
+  return (
+    <>
+      <h1 style={{ fontSize: '5em', textAlign: 'center', marginTop: 0 }}>
+        {list.title}
+      </h1>
+      <p style={{ fontSize: '2em', maxWidth: '30em', textAlign: 'center' }}>
+        {list.description}
+      </p>
+      <button
+        onClick={fetchItem}
+        style={{
+          fontSize: '3em',
+          padding: '0.5em 2em',
+          borderRadius: '2em',
+          backgroundColor: 'blueviolet',
+          borderWidth: 0,
+          color: 'white',
+          boxShadow: '0px 4px 5px rgba(0,0,0,0.3)',
+          marginTop: '1em',
+        }}
+      >
+        Shuffle!
+      </button>
+    </>
+  )
+}
 
-  const onDeleteClick = (id: DeleteListMutationVariables['id']) => {
-    if (confirm('Are you sure you want to delete list ' + id + '?')) {
-      deleteList({ variables: { id } })
+const ViewItem = ({
+  item,
+  back,
+}: {
+  list: NonNullable<FindListById['list']>
+  item: Partial<ListItem>
+  fetchItem: () => void
+  back: () => void
+}) => {
+  return (
+    <>
+      <h1>{item.title}</h1>
+      <Embed url={item.url} />
+      <p>{item.description}</p>
+      <button
+        onClick={back}
+        style={{
+          fontSize: '1em',
+          padding: '0.5em 2em',
+          borderRadius: '2em',
+          backgroundColor: 'blueviolet',
+          borderWidth: 0,
+          color: 'white',
+          boxShadow: '0px 4px 5px rgba(0,0,0,0.3)',
+          marginTop: '1em',
+        }}
+      >
+        Back
+      </button>
+    </>
+  )
+}
+
+const List = ({ list }: Props) => {
+  const [item, setItem] = useState<Partial<ListItem> | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false)
+
+  const { isAuthenticated } = useAuth()
+
+  const fetchItem = useCallback(async () => {
+    setLoading(true)
+    try {
+      const response = await fetch(
+        `/.redwood/functions/nextFromList?id=${list.id}`
+      )
+      const responseJSON = await response.json()
+      setItem(responseJSON.data)
+      setLoading(false)
+    } catch (error) {
+      setError(true)
+      setLoading(false)
     }
+  }, [setLoading, setItem, list.id])
+
+  if (loading) {
+    return <p>Loading</p>
+  }
+
+  if (error) {
+    return <p>Error!</p>
   }
 
   return (
     <>
-      <div className="rw-segment">
-        <header className="rw-segment-header">
-          <h2 className="rw-heading rw-heading-secondary">
-            List {list.id} Detail
-          </h2>
-        </header>
-        <table className="rw-table">
-          <tbody>
-            <tr>
-              <th>Id</th>
-              <td>{list.id}</td>
-            </tr>
-            <tr>
-              <th>Title</th>
-              <td>{list.title}</td>
-            </tr>
-            <tr>
-              <th>Description</th>
-              <td>{list.description}</td>
-            </tr>
-            <tr>
-              <th>Created at</th>
-              <td>{timeTag(list.createdAt)}</td>
-            </tr>
+      <Flex
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        minHeight="100vh"
+      >
+        {item ? (
+          <ViewItem
+            list={list}
+            fetchItem={fetchItem}
+            item={item}
+            back={() => setItem(null)}
+          />
+        ) : (
+          <Intro list={list} fetchItem={fetchItem} />
+        )}
+        {isAuthenticated && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 10,
+              right: 10,
+              display: 'flex',
+              flexDirection: 'row',
+            }}
+          >
+            <TooltipTrigger delay={0} placement="bottom">
+              <SpectrumLink>
+                <Link
+                  style={{ display: 'block', marginRight: '10px' }}
+                  to={routes.shuffles()}
+                >
+                  <Home />
+                </Link>
+              </SpectrumLink>
 
-            <tr>
-              <th>Webhook</th>
-              <td>{list.webhook}</td>
-            </tr>
-            <tr>
-              <th>Url</th>
-              <td>{list.url}</td>
-            </tr>
-            <tr>
-              <th>Is private</th>
-              <td>{checkboxInputTag(list.isPrivate)}</td>
-            </tr>
-            <tr>
-              <th>Skip limit</th>
-              <td>{list.skipLimit}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <nav className="rw-button-group">
-        <Link
-          to={routes.editList({ id: list.id })}
-          className="rw-button rw-button-blue"
-        >
-          Edit
-        </Link>
-        <button
-          type="button"
-          className="rw-button rw-button-red"
-          onClick={() => onDeleteClick(list.id)}
-        >
-          Delete
-        </button>
-      </nav>
+              <Tooltip>View your Shuffles</Tooltip>
+            </TooltipTrigger>
+
+            <TooltipTrigger delay={0} placement="bottom">
+              <SpectrumLink>
+                <Link
+                  style={{ display: 'block' }}
+                  to={routes.editList({ id: list.id })}
+                >
+                  <Settings />
+                </Link>
+              </SpectrumLink>
+              <Tooltip>Edit this Shuffle</Tooltip>
+            </TooltipTrigger>
+          </div>
+        )}
+      </Flex>
     </>
   )
 }

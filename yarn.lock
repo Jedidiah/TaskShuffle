@@ -12367,6 +12367,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"decode-uri-component@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "decode-uri-component@npm:0.4.1"
+  checksum: a180bbdb5398ec8270d236a3ac07cb988bbf6097428481780b85840f088951dc0318a8d8f9d56796e1a322b55b29859cea29982f22f9b03af0bc60974c54e591
+  languageName: node
+  linkType: hard
+
 "decompress-response@npm:^3.3.0":
   version: 3.3.0
   resolution: "decompress-response@npm:3.3.0"
@@ -14221,6 +14228,13 @@ __metadata:
   dependencies:
     to-regex-range: ^5.0.1
   checksum: 7cdad7d426ffbaadf45aeb5d15ec675bbd77f7597ad5399e3d2766987ed20bda24d5fac64b3ee79d93276f5865608bb22344a26b9b1ae6c4d00bd94bf611623f
+  languageName: node
+  linkType: hard
+
+"filter-obj@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "filter-obj@npm:5.1.0"
+  checksum: 716e8ad2bc352e206556b3e5695b3cdff8aab80c53ea4b00c96315bbf467b987df3640575100aef8b84e812cf5ea4251db4cd672bbe33b1e78afea88400c67dd
   languageName: node
   linkType: hard
 
@@ -20150,6 +20164,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"query-string@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "query-string@npm:8.1.0"
+  dependencies:
+    decode-uri-component: ^0.4.1
+    filter-obj: ^5.1.0
+    split-on-first: ^3.0.0
+  checksum: 36247633651c7a2aaf84a5e0f9917dea5a514259fda7d49f88e47d698439709539d541506787d13e3543545539e8924cdae5df26e85520485d905332902d0220
+  languageName: node
+  linkType: hard
+
 "querystring-es3@npm:^0.2.0":
   version: 0.2.1
   resolution: "querystring-es3@npm:0.2.1"
@@ -20316,6 +20341,15 @@ __metadata:
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: 6eb5e4b28028c23e2bfcf73371e72cd4162e4ac7ab445ddae2afe24e347a37d6dc22fae6e1748632cd43c6d4f9b8f86dcf26bf9275e1874f436d129952528ae0
+  languageName: node
+  linkType: hard
+
+"react-lite-yt-embed@npm:^1.2.7":
+  version: 1.2.7
+  resolution: "react-lite-yt-embed@npm:1.2.7"
+  peerDependencies:
+    react: ">=16"
+  checksum: 8d68a37ca35d3949cb7052ec31251d3eecc8b41ab7f68071f8bc006501e76b04a9682a8f3ffbe3fb8d343f35346006c26e259f14e0b049ec86c12c8281403046
   languageName: node
   linkType: hard
 
@@ -20965,6 +20999,8 @@ __metadata:
     "@spectrum-icons/illustrations": ^3.6.4
     "@spectrum-icons/workflow": ^4.2.3
     lodash: ^4.17.21
+    query-string: ^8.1.0
+    react-lite-yt-embed: ^1.2.7
   languageName: unknown
   linkType: soft
 
@@ -21764,6 +21800,13 @@ __metadata:
     select-hose: ^2.0.0
     spdy-transport: ^3.0.0
   checksum: 983509c0be9d06fd00bb9dff713c5b5d35d3ffd720db869acdd5ad7aa6fc0e02c2318b58f75328957d8ff772acdf1f7d19382b6047df342044ff3e2d6805ccdf
+  languageName: node
+  linkType: hard
+
+"split-on-first@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "split-on-first@npm:3.0.0"
+  checksum: a1262eae12b68de235e1a08e011bf5b42c42621985ddf807e6221fb1e2b3304824913ae7019f18436b96b8fab8aef5f1ad80dedd2385317fdc51b521c3882cd0
   languageName: node
   linkType: hard
 

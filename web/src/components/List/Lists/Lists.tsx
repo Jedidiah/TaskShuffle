@@ -22,7 +22,7 @@ import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/List/ListsCell'
 
-const DELETE_LIST_MUTATION = gql`
+export const DELETE_LIST_MUTATION = gql`
   mutation DeleteListMutation($id: String!) {
     deleteList(id: $id) {
       id

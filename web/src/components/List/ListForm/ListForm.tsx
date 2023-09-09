@@ -3,11 +3,9 @@ import { useState } from 'react'
 import {
   Button,
   Checkbox,
-  Content,
   Flex,
   Form,
   Heading,
-  IllustratedMessage,
   NumberField,
   Switch,
   TextArea,
@@ -61,7 +59,7 @@ const ListForm = (props: ListFormProps) => {
   // }
 
   return (
-    <Flex wrap direction="row">
+    <Flex wrap direction="row" marginBottom="size-225">
       <View padding="size-200" maxWidth="30em" width="100%">
         <Form
           onSubmit={(e) => {
@@ -75,6 +73,8 @@ const ListForm = (props: ListFormProps) => {
             })
           }}
         >
+          <Heading>Shuffle Details:</Heading>
+
           <FormError
             error={props.error}
             wrapperClassName="rw-form-error-wrapper"
@@ -125,7 +125,6 @@ const ListForm = (props: ListFormProps) => {
               </Checkbox>
             </Flex>
           </Well>
-
           <Button variant="cta" type="submit">
             {props.isCreating ? 'Create Shuffle' : 'Save Shuffle'}
           </Button>
@@ -136,10 +135,15 @@ const ListForm = (props: ListFormProps) => {
           flexGrow={1}
           minHeight="size-4600"
           marginX="size-1000"
-          marginY="size-500"
+          marginY="size-100"
         >
           <Flex alignItems="center" justifyContent="space-between">
-            <Heading>Items: ({props.list.items.length})</Heading>
+            <Heading>
+              Items:{' '}
+              <span style={{ color: '#bbb', marginLeft: 10 }}>
+                ({props.list.items.length})
+              </span>
+            </Heading>
             <NewListItem
               showCreateModal={showCreateModal}
               setShowCreateModal={setShowCreateModal}
