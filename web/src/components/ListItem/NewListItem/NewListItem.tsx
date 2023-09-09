@@ -33,6 +33,7 @@ const CREATE_LIST_ITEM_MUTATION = gql`
 const NewListItem = (props: {
   listTitle: string
   listId: string
+  listTags: string
   showCreateModal: boolean
   setShowCreateModal: (s: boolean) => void
 }) => {
@@ -83,16 +84,18 @@ const NewListItem = (props: {
               description: e.target?.description?.value,
               url: e.target?.url?.value,
               webhook: e.target?.webhook?.value,
+              tags: e.target?.tags?.value,
               listId: props.listId,
             })
           }}
         >
-          <Dialog minWidth="size-6000">
+          <Dialog maxWidth="40em" width="85vw" maxHeight="90vh">
             <Heading>Adding New Item</Heading>
             <Header>Shuffle: {props.listTitle}</Header>
             <Divider />
             <Content>
               <ListItemForm
+                listTags={props.listTags}
                 listId={props.listId}
                 loading={loading}
                 error={error}

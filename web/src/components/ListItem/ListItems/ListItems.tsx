@@ -2,20 +2,13 @@ import { useState } from 'react'
 
 import {
   ActionMenu,
-  Button,
-  ButtonGroup,
-  Content,
-  Dialog,
-  DialogTrigger,
-  Divider,
-  Form,
-  Header,
-  Heading,
+  Flex,
   Item,
   ListView,
+  TagGroup,
   Text,
+  View,
 } from '@adobe/react-spectrum'
-import Add from '@spectrum-icons/workflow/Add'
 import Delete from '@spectrum-icons/workflow/Delete'
 import Edit from '@spectrum-icons/workflow/Edit'
 import type { FindListItems, ListItem } from 'types/graphql'
@@ -26,7 +19,6 @@ import { toast } from '@redwoodjs/web/toast'
 import { QUERY } from 'src/components/ListItem/ListItemsCell'
 
 import EditListItemCell from '../EditListItemCell'
-import ListItemForm from '../ListItemForm/ListItemForm'
 
 const DELETE_LIST_ITEM_MUTATION = gql`
   mutation DeleteListItemMutation($id: String!) {
@@ -62,11 +54,13 @@ const ListItemsList = ({ listItems }: FindListItems) => {
   }
 
   return (
-    <>
+    <View height="100%">
       <ListView
         aria-label="ListView example with complex items"
         onAction={(key) => setEditId(String(key))}
-        minHeight="size-4600"
+        density="spacious"
+        flexGrow={1}
+        // minHeight="90%"
       >
         {listItems.map((item) => (
           <Item key={item.id} textValue="Utilities" hasChildItems>
@@ -106,7 +100,7 @@ const ListItemsList = ({ listItems }: FindListItems) => {
           setShowEditModal={() => setEditId(undefined)}
         />
       )}
-    </>
+    </View>
   )
 }
 

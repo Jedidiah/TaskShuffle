@@ -1,5 +1,4 @@
 import {
-  ActionGroup,
   Breadcrumbs,
   Flex,
   Item,
@@ -9,14 +8,9 @@ import {
   ActionButton,
 } from '@adobe/react-spectrum'
 import Delete from '@spectrum-icons/workflow/Delete'
-import Edit from '@spectrum-icons/workflow/Edit'
 import OpenIn from '@spectrum-icons/workflow/OpenIn'
 import Share from '@spectrum-icons/workflow/Share'
-import type {
-  DeleteListMutationVariables,
-  EditListById,
-  UpdateListInput,
-} from 'types/graphql'
+import type { EditListById, UpdateListInput } from 'types/graphql'
 
 import { Link, navigate, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
@@ -34,14 +28,16 @@ export const QUERY = gql`
       title
       description
       createdAt
-      webhook
-      url
       isPrivate
       skipLimit
+      tags
       items {
         id
         title
         description
+        tags
+        webhook
+        url
       }
     }
   }
@@ -53,9 +49,6 @@ const UPDATE_LIST_MUTATION = gql`
       title
       description
       createdAt
-      webhook
-      url
-      isPrivate
       skipLimit
     }
   }

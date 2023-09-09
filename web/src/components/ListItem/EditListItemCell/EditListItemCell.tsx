@@ -29,8 +29,12 @@ export const QUERY = gql`
       description
       createdAt
       listId
+      list {
+        tags
+      }
       webhook
       url
+      tags
     }
   }
 `
@@ -44,6 +48,7 @@ const UPDATE_LIST_ITEM_MUTATION = gql`
       listId
       webhook
       url
+      tags
     }
   }
 `
@@ -97,6 +102,7 @@ export const Success = ({
                 url: e.target?.url?.value,
                 webhook: e.target?.webhook?.value,
                 listId: listItem.listId,
+                tags: e.target?.tags?.value,
               },
               listItem.id
             )
@@ -108,6 +114,7 @@ export const Success = ({
             <Content>
               <ListItemForm
                 listItem={listItem}
+                listTags={listItem.list.tags}
                 listId={listItem.listId}
                 loading={loading}
                 error={error}

@@ -12,7 +12,7 @@ export const schema = gql`
     order: String
     isPrivate: Boolean!
     skipLimit: Int
-    ListItemTag: [ListItemTag]!
+    tags: String!
   }
 
   type Query {
@@ -25,7 +25,7 @@ export const schema = gql`
     description: String
     webhook: String
     url: String
-    isPrivate: Boolean!
+    isPrivate: Boolean
     skipLimit: Int
   }
 
@@ -36,6 +36,7 @@ export const schema = gql`
     url: String
     isPrivate: Boolean
     skipLimit: Int
+    tags: String
   }
 
   type Mutation {

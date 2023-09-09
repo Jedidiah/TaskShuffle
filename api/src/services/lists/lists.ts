@@ -1,4 +1,5 @@
 import shuffle from 'lodash/shuffle'
+import uniq from 'lodash/uniq'
 import type {
   QueryResolvers,
   MutationResolvers,
@@ -46,9 +47,23 @@ export const updateList: MutationResolvers['updateList'] = ({ id, input }) => {
   })
 }
 
-export const nextItemFromList: MutationResolvers['nextFromList'] = async ({
+export const updateListTags = async ({
   id,
+  tags,
+}: {
+  id: string
+  tags: string
 }) => {
+  const tagsFromString = (str: string) =>
+    str.length > 0 ? str.split(',').map((t) => t.trim()) : []
+  const currentList = await list({ id })
+  const newTags = tagsFromString(tags)
+  const currentTags = tagsFromString(currentList.tags)
+  const updatedTags: string = uniq([...newTags, ...currentTags]).join(',')
+  return updateList({ id, input: { ...currentList, tags: updatedTags } })
+}
+
+export const nextItemFromList = async ({ id }: { id: string }) => {
   const currentList = await db.list.findUnique({ where: { id } })
 
   const [nextItem, ...newOrder] = JSON.parse(currentList.order)

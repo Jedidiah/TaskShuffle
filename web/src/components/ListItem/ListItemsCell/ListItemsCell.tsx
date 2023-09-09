@@ -17,6 +17,7 @@ export const QUERY = gql`
       url
       listId
       webhook
+      tags
     }
   }
 `

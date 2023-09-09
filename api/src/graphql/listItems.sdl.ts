@@ -9,7 +9,7 @@ export const schema = gql`
     list: List!
     webhook: String
     url: String
-    tags: [ListItemTag]!
+    tags: String!
   }
 
   type Query {
@@ -23,6 +23,7 @@ export const schema = gql`
     listId: String!
     webhook: String
     url: String
+    tags: String
   }
 
   input UpdateListItemInput {
@@ -31,6 +32,7 @@ export const schema = gql`
     listId: String
     webhook: String
     url: String
+    tags: String
   }
 
   type Mutation {

@@ -6,7 +6,7 @@ import type {
 
 import { db } from 'src/lib/db'
 
-import { shuffleList } from '../lists/lists'
+import { shuffleList, updateListTags } from '../lists/lists'
 
 export const listItems: QueryResolvers['listItems'] = async ({ listId }) => {
   const items = await db.listItem.findMany({ where: { listId } })
@@ -26,13 +26,17 @@ export const createListItem: MutationResolvers['createListItem'] = async ({
     data: { ...input, userId: context.currentUser.id },
   })
   await shuffleList({ id: input.listId })
+  await updateListTags({ id: input.listId, tags: input.tags })
+
   return listItem
 }
 
-export const updateListItem: MutationResolvers['updateListItem'] = ({
+export const updateListItem: MutationResolvers['updateListItem'] = async ({
   id,
   input,
 }) => {
+  await updateListTags({ id: input.listId, tags: input.tags })
+
   return db.listItem.update({
     data: { ...input, userId: context.currentUser.id },
     where: { id },
@@ -55,8 +59,5 @@ export const ListItem: ListItemRelationResolvers = {
   },
   list: (_obj, { root }) => {
     return db.listItem.findUnique({ where: { id: root?.id } }).list()
-  },
-  tags: (_obj, { root }) => {
-    return db.listItem.findUnique({ where: { id: root?.id } }).tags()
   },
 }

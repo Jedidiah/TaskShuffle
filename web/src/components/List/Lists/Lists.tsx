@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 
 import {
   ActionGroup,
@@ -161,68 +161,6 @@ const ListsList = ({ lists }: FindLists) => {
       })}
     </Flex>
   )
-
-  // return (
-  //   <div className="rw-segment rw-table-wrapper-responsive">
-  //     <table className="rw-table">
-  //       <thead>
-  //         <tr>
-  //           <th>Id</th>
-  //           <th>Title</th>
-  //           <th>Description</th>
-  //           <th>Created at</th>
-  //           <th>User id</th>
-  //           <th>Webhook</th>
-  //           <th>Url</th>
-  //           <th>Is private</th>
-  //           <th>Skip limit</th>
-  //           <th>&nbsp;</th>
-  //         </tr>
-  //       </thead>
-  //       <tbody>
-  //         {lists.map((list) => (
-  //           <tr key={list.id}>
-  //             <td>{truncate(list.id)}</td>
-  //             <td>{truncate(list.title)}</td>
-  //             <td>{truncate(list.description)}</td>
-  //             <td>{timeTag(list.createdAt)}</td>
-  //             <td>{truncate(list.userId)}</td>
-  //             <td>{truncate(list.webhook)}</td>
-  //             <td>{truncate(list.url)}</td>
-  //             <td>{checkboxInputTag(list.isPrivate)}</td>
-  //             <td>{truncate(list.skipLimit)}</td>
-  //             <td>
-  //               <nav className="rw-table-actions">
-  //                 <Link
-  //                   to={routes.shuffle({ id: list.id })}
-  //                   title={'Show list ' + list.id + ' detail'}
-  //                   className="rw-button rw-button-small"
-  //                 >
-  //                   Show
-  //                 </Link>
-  //                 <Link
-  //                   to={routes.editList({ id: list.id })}
-  //                   title={'Edit list ' + list.id}
-  //                   className="rw-button rw-button-small rw-button-blue"
-  //                 >
-  //                   Edit
-  //                 </Link>
-  //                 <button
-  //                   type="button"
-  //                   title={'Delete list ' + list.id}
-  //                   className="rw-button rw-button-small rw-button-red"
-  //                   onClick={() => onDeleteClick(list.id)}
-  //                 >
-  //                   Delete
-  //                 </button>
-  //               </nav>
-  //             </td>
-  //           </tr>
-  //         ))}
-  //       </tbody>
-  //     </table>
-  //   </div>
-  // )
 }
 
 export default ListsList

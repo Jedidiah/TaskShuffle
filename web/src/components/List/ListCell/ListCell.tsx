@@ -11,10 +11,9 @@ export const QUERY = gql`
       title
       description
       createdAt
-      webhook
-      url
       isPrivate
       skipLimit
+      tags
     }
   }
 `
