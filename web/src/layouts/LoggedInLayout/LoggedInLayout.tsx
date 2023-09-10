@@ -18,6 +18,7 @@ import { Link, routes } from '@redwoodjs/router'
 import { Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import Logo from 'src/components/Logo/Logo'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -49,12 +50,20 @@ const LoggedInLayout = ({ children }: LayoutProps) => {
             alignItems={'center'}
             justifyContent={'space-between'}
           >
-            <Link to={routes.shuffles()}>
-              <Heading level={1}>Shuffle</Heading>
+            <Link
+              style={{
+                color: 'white',
+                textDecoration: 'none',
+                textTransform: 'uppercase',
+                letterSpacing: '3px',
+              }}
+              to={routes.shuffles()}
+            >
+              <Logo />
             </Link>
             <MenuTrigger>
               <ActionButton>
-                <User /> <Text>{currentUser.name ?? currentUser.id} 🞃</Text>
+                <User /> <Text>{currentUser?.name ?? currentUser?.id} 🞃</Text>
               </ActionButton>
               <Menu onAction={handleUserMenuAction}>
                 <Item key="settings">Settings</Item>
@@ -67,7 +76,7 @@ const LoggedInLayout = ({ children }: LayoutProps) => {
       </Provider>
       <View backgroundColor={'gray-200'} overflow={'auto'}>
         <View minHeight="90vh">{children}</View>
-        <View>Footer</View>
+        <View>{/* Footer */}</View>
       </View>
     </Grid>
   )

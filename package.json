@@ -29,6 +29,7 @@
     "@spectrum-icons/workflow": "^4.2.3",
     "lodash": "^4.17.21",
     "query-string": "^8.1.0",
-    "react-lite-yt-embed": "^1.2.7"
+    "react-lite-yt-embed": "^1.2.7",
+    "react-transition-group": "^4.4.5"
   }
 }

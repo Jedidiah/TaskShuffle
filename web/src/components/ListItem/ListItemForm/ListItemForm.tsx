@@ -191,7 +191,24 @@ const ListItemForm = (props: ListItemFormProps) => {
                   When an item is picked it&rsquo;s webhook will be pinged, this
                   could allow automation such as playing a certain song on your
                   smart speaker, kicking off a build, or adjusting your smart
-                  lighting.
+                  lighting. You can use{' '}
+                  <span
+                    style={{ fontFamily: 'monospace', backgroundColor: '#ccc' }}
+                  >
+                    {'{title}'}
+                  </span>{' '}
+                  <span
+                    style={{ fontFamily: 'monospace', backgroundColor: '#ccc' }}
+                  >
+                    {'{description}'}
+                  </span>{' '}
+                  and{' '}
+                  <span
+                    style={{ fontFamily: 'monospace', backgroundColor: '#ccc' }}
+                  >
+                    {'{url}'}
+                  </span>{' '}
+                  as tokens in the webhook.
                 </Text>
               </Content>
             </ContextualHelp>

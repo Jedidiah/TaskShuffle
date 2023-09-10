@@ -24,7 +24,16 @@ function Embed({ url }: { url: string }) {
   }
 
   if (url.startsWith('https://') || url.startsWith('http://')) {
-    return <a href={url}>Open Link</a>
+    return (
+      <a
+        style={{ fontSize: '2em' }}
+        target="_blank"
+        href={url}
+        rel="noreferrer"
+      >
+        Open Link
+      </a>
+    )
   }
 
   return null

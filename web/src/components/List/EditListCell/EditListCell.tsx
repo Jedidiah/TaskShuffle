@@ -29,6 +29,9 @@ export const QUERY = gql`
       description
       createdAt
       isPrivate
+      themeProperties
+      customTheme
+      theme
       skipLimit
       tags
       items {
@@ -50,6 +53,10 @@ const UPDATE_LIST_MUTATION = gql`
       description
       createdAt
       skipLimit
+      isPrivate
+      themeProperties
+      customTheme
+      theme
     }
   }
 `

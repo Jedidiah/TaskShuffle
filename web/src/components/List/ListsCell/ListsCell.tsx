@@ -1,3 +1,10 @@
+import {
+  Button,
+  Content,
+  Heading,
+  IllustratedMessage,
+} from '@adobe/react-spectrum'
+import FileIllustration from '@spectrum-icons/illustrations/Folder'
 import type { FindLists } from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
@@ -15,6 +22,9 @@ export const QUERY = gql`
       webhook
       url
       isPrivate
+      themeProperties
+      customTheme
+      theme
       skipLimit
     }
   }
@@ -24,12 +34,24 @@ export const Loading = () => <div>Loading...</div>
 
 export const Empty = () => {
   return (
-    <div className="rw-text-center">
-      {'No lists yet. '}
-      <Link to={routes.newList()} className="rw-link">
-        {'Create one?'}
-      </Link>
-    </div>
+    <>
+      <IllustratedMessage width="100%" minHeight="size-3600">
+        <FileIllustration />
+        <Heading>Create your first Shuffle to get started</Heading>
+
+        <Content>
+          A Shuffle is a list of anything that you want but don&rsquo;t need or
+          want to think about the order in which you get them. For example films
+          you want to watch.
+          <br /> Check out the public gallery for ideas
+        </Content>
+      </IllustratedMessage>
+      <div className="rw-text-center">
+        <Link to={routes.newList()} className="rw-link">
+          <Button variant="cta">Create your first Shuffle</Button>
+        </Link>
+      </div>
+    </>
   )
 }
 

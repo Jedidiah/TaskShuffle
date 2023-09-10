@@ -12,6 +12,9 @@ export const schema = gql`
     order: String
     isPrivate: Boolean!
     skipLimit: Int
+    themeProperties: String
+    customTheme: String
+    theme: String
     tags: String!
   }
 
@@ -27,6 +30,9 @@ export const schema = gql`
     url: String
     isPrivate: Boolean
     skipLimit: Int
+    themeProperties: String
+    customTheme: String
+    theme: String
   }
 
   input UpdateListInput {
@@ -37,6 +43,9 @@ export const schema = gql`
     isPrivate: Boolean
     skipLimit: Int
     tags: String
+    themeProperties: String
+    customTheme: String
+    theme: String
   }
 
   type Mutation {

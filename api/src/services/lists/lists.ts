@@ -1,3 +1,4 @@
+import sample from 'lodash/sample'
 import shuffle from 'lodash/shuffle'
 import uniq from 'lodash/uniq'
 import type {
@@ -7,6 +8,7 @@ import type {
 } from 'types/graphql'
 
 import { db } from 'src/lib/db'
+import { logger } from 'src/lib/logger'
 
 import { listItems } from '../listItems/listItems'
 
@@ -20,7 +22,7 @@ export const lists: QueryResolvers['lists'] = () => {
 
 export const list: QueryResolvers['list'] = ({ id }) => {
   return db.list.findUnique({
-    where: { id, userId: context.currentUser.id },
+    where: { id },
   })
 }
 
@@ -63,20 +65,35 @@ export const updateListTags = async ({
   return updateList({ id, input: { ...currentList, tags: updatedTags } })
 }
 
-export const nextItemFromList = async ({ id }: { id: string }) => {
+export const nextItemFromList = async ({
+  id,
+  tag,
+}: {
+  id: string
+  tag?: string
+}) => {
   const currentList = await db.list.findUnique({ where: { id } })
+  logger.info({ id, tag })
+  if (!tag) {
+    const [nextItem, ...newOrder] = JSON.parse(currentList.order)
 
-  const [nextItem, ...newOrder] = JSON.parse(currentList.order)
-
-  if (newOrder.length >= 1) {
-    await db.list.update({
-      data: { order: JSON.stringify(newOrder) },
-      where: { id },
-    })
-  } else {
-    await shuffleList({ id })
+    if (newOrder.length >= 1) {
+      await db.list.update({
+        data: { order: JSON.stringify(newOrder) },
+        where: { id },
+      })
+    } else {
+      await shuffleList({ id })
+    }
+    return nextItem
   }
-  return nextItem
+
+  const matchingItems = await db.listItem.findMany({
+    where: { listId: id, AND: [{ tags: { contains: tag } }] },
+  })
+  logger.info({ matchingItems, tag })
+
+  return sample(matchingItems)?.id
 }
 
 export const deleteList: MutationResolvers['deleteList'] = ({ id }) => {

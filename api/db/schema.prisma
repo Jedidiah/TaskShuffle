@@ -48,6 +48,7 @@ model List {
   // listType    String? @default("Default")  //ListType
   theme           String?
   themeProperties String?
+  customTheme     String?
   tags            String     @default("")
 }
 

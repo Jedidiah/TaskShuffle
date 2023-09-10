@@ -16,14 +16,10 @@ const ListsPage = () => {
         marginBottom={'size-200'}
         minHeight={'48px'}
       >
-        <Flex
-          direction={'row'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
-        >
-          <Breadcrumbs size="L">
-            <Item key="home">Shuffles</Item>
-          </Breadcrumbs>
+        <Flex direction={'row'} alignItems={'center'} justifyContent={'end'}>
+          {/* <Breadcrumbs size="L">
+            <Item key="home">Your Shuffles</Item>
+          </Breadcrumbs> */}
           <Button
             margin={'size-100'}
             variant="primary"

@@ -6,7 +6,9 @@ import {
   Flex,
   Form,
   Heading,
+  Item,
   NumberField,
+  Picker,
   Switch,
   TextArea,
   TextField,
@@ -40,7 +42,7 @@ const ListForm = (props: ListFormProps) => {
   }
 
   return (
-    <Flex wrap direction="row" marginBottom="size-225">
+    <Flex direction="row" marginBottom="size-225">
       <View padding="size-200" maxWidth="30em" width="100%">
         <Form
           onSubmit={(e) => {
@@ -50,6 +52,9 @@ const ListForm = (props: ListFormProps) => {
                 id: undefined,
                 title: e.target?.title?.value,
                 description: e.target?.description?.value,
+                isPrivate: e.target?.isPrivate?.checked,
+                themeProperties: e.target?.themeProperties?.value,
+                theme: e.target?.theme?.value,
               })
             } else {
               toast.error(
@@ -91,6 +96,65 @@ const ListForm = (props: ListFormProps) => {
                 defaultValue={props.list?.description}
               />
 
+              <Switch
+                marginTop="size-200"
+                isSelected={showAdvanced}
+                onChange={setShowAdvanced}
+                defaultSelected={false}
+              >
+                Advanced Options
+              </Switch>
+
+              <Well
+                isHidden={!showAdvanced}
+                marginBottom="size-200"
+                width="90%"
+              >
+                <Flex direction="column">
+                  <NumberField
+                    label="Skip Limit"
+                    name="skipLimit"
+                    minValue={0}
+                    maxValue={100}
+                    formatOptions={{ maximumFractionDigits: 0 }}
+                    defaultValue={props.list?.skipLimit ?? 0}
+                    marginBottom="size-150"
+                  />
+                  <Picker
+                    label="Theme"
+                    name="theme"
+                    marginBottom="size-150"
+                    defaultSelectedKey={
+                      props.list?.theme?.length > 0
+                        ? props.list?.theme
+                        : 'defaultTheme'
+                    }
+                  >
+                    <Item key="defaultTheme">Default</Item>
+                    <Item key="flashcardTheme">Flash Card</Item>
+                  </Picker>
+                  <TextField
+                    label="Multiselect Tags"
+                    name="themeProperties"
+                    description="Use comma-seperated tags to select multiple items in each shuffle"
+                    defaultValue={props.list?.themeProperties ?? ''}
+                    marginBottom="size-150"
+                  />
+                  <TextArea
+                    name="customTheme"
+                    label="Custom CSS"
+                    defaultValue={props.list?.customTheme ?? ''}
+                    marginBottom="size-150"
+                  />
+                  <Checkbox
+                    defaultSelected={props.list?.isPrivate}
+                    name="isPrivate"
+                  >
+                    Make Shuffle Private?
+                  </Checkbox>
+                </Flex>
+              </Well>
+
               <Button variant="cta" type="submit">
                 {props.isCreating ? 'Create Shuffle' : 'Save Shuffle'}
               </Button>
@@ -101,6 +165,7 @@ const ListForm = (props: ListFormProps) => {
       {!props.isCreating && (
         <Flex
           flexGrow={1}
+          flexBasis="50%"
           minHeight="70vh"
           marginX="size-1000"
           marginY="size-100"
@@ -121,7 +186,7 @@ const ListForm = (props: ListFormProps) => {
               listTags={props.list.tags}
             />
           </Flex>
-          <View flexGrow={1} flexBasis="100%" backgroundColor="gray-100">
+          <View flexGrow={1} backgroundColor="gray-100">
             <ListItemsCell listId={props.list.id} />
           </View>
         </Flex>

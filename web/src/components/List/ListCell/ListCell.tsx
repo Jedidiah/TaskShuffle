@@ -12,6 +12,9 @@ export const QUERY = gql`
       description
       createdAt
       isPrivate
+      themeProperties
+      customTheme
+      theme
       skipLimit
       tags
     }

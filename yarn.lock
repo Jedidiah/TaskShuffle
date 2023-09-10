@@ -21069,6 +21069,7 @@ __metadata:
     node-ssh: ^13.1.0
     query-string: ^8.1.0
     react-lite-yt-embed: ^1.2.7
+    react-transition-group: ^4.4.5
   languageName: unknown
   linkType: soft
 

@@ -23,21 +23,51 @@ import { nextItemFromList } from 'src/services/lists/lists'
 export const handler = async (event: APIGatewayEvent, _context: Context) => {
   logger.info(`${event.httpMethod} ${event.path}: nextFromList function`)
 
-  const nextItemId = await nextItemFromList({
-    id: event.queryStringParameters.id,
-  })
+  const { tags = '', id } = event.queryStringParameters
 
-  const nextItem = await listItem({ id: nextItemId })
+  const nextItems = []
 
-  if (
-    nextItem?.webhook?.length > 10 &&
-    (nextItem.webhook.startsWith('http://') ||
-      nextItem.webhook.startsWith('https://'))
-  ) {
-    await fetch(nextItem.webhook, { method: 'POST' })
+  for await (const tag of tags.split(',')) {
+    logger.info({ tag })
+    const itemId = await nextItemFromList({
+      id,
+      tag: tag.length > 0 ? tag : undefined,
+    })
+    const item = await listItem({ id: itemId })
+    logger.info({ item })
+    nextItems.push(item)
   }
 
-  logger.info(nextItem)
+  // const nextItems = tags.split(',').map(async (tag) => {
+  //   logger.info({ tag })
+  //   const itemId = await nextItemFromList({
+  //     id,
+  //     tag: tag.length > 0 ? tag : undefined,
+  //   })
+  //   const item = await listItem({ id: itemId })
+  //   logger.info({ item })
+  //   return await item
+  // })
+
+  // const nextItemId = await nextItemFromList({ id })
+
+  // const nextItem = await listItem({ id: nextItemId })
+  // for await (const item of nextItems) {
+  nextItems.forEach((item) => {
+    if (
+      item?.webhook?.length > 10 &&
+      (item?.webhook?.startsWith('http://') ||
+        item?.webhook?.startsWith('https://'))
+    ) {
+      const webhookWithTokens = item.webhook
+        .replaceAll('{title}', encodeURIComponent(item.title))
+        .replaceAll('{description}', encodeURIComponent(item.description))
+        .replaceAll('{url}', encodeURIComponent(item.url))
+      fetch(webhookWithTokens, { method: 'POST' })
+    }
+  })
+
+  logger.info(nextItems)
 
   return {
     statusCode: 200,
@@ -45,7 +75,9 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      data: omit(nextItem, ['webhook', 'createdAt', 'userId']),
+      data: nextItems.map((item) =>
+        omit(item, ['webhook', 'createdAt', 'userId'])
+      ),
     }),
   }
 }
