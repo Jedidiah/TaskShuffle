@@ -34,18 +34,12 @@ const NewList = () => {
     <>
       <View
         backgroundColor={'gray-50'}
-        // position={'sticky'}
         top={0}
         borderBottomWidth={'thin'}
         borderBottomColor={'gray-300'}
         marginBottom={'size-200'}
       >
-        <Flex
-          direction={'row'}
-          minHeight={'48px'}
-          alignItems={'center'}
-          // justifyContent={'space-between'}
-        >
+        <Flex direction={'row'} minHeight={'48px'} alignItems={'center'}>
           <Breadcrumbs size="L" flexGrow={1}>
             <Item key="home">
               <Link to={routes.shuffles()}>Shuffles</Link>

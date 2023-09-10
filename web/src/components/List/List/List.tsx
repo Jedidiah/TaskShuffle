@@ -15,6 +15,7 @@ import type { FindListById, List, ListItem } from 'types/graphql'
 import { Link, routes } from '@redwoodjs/router'
 
 import { useAuth } from 'src/auth'
+import ListItemsCell from 'src/components/ListItem/ListItemsCell'
 
 import Embed from './Embeds'
 
@@ -199,7 +200,7 @@ const List = ({ list }: Props) => {
                   fetchItem={fetchItem}
                   item={i}
                   delay={500 * (index + 1)}
-                  shouldColor={true}
+                  shouldColor={ListItemsCell.length > 1}
                   color={colorPalette[index]}
                 />
               ))}

@@ -8,9 +8,6 @@ import type {
 } from 'types/graphql'
 
 import { db } from 'src/lib/db'
-import { logger } from 'src/lib/logger'
-
-import { listItems } from '../listItems/listItems'
 
 export const lists: QueryResolvers['lists'] = () => {
   return db.list.findMany({
@@ -73,7 +70,6 @@ export const nextItemFromList = async ({
   tag?: string
 }) => {
   const currentList = await db.list.findUnique({ where: { id } })
-  logger.info({ id, tag })
   if (!tag) {
     const [nextItem, ...newOrder] = JSON.parse(currentList.order)
 
@@ -91,7 +87,6 @@ export const nextItemFromList = async ({
   const matchingItems = await db.listItem.findMany({
     where: { listId: id, AND: [{ tags: { contains: tag } }] },
   })
-  logger.info({ matchingItems, tag })
 
   return sample(matchingItems)?.id
 }
@@ -108,8 +103,5 @@ export const List: ListRelationResolvers = {
   },
   items: (_obj, { root }) => {
     return db.list.findUnique({ where: { id: root?.id } }).items()
-  },
-  ListItemTag: (_obj, { root }) => {
-    return db.list.findUnique({ where: { id: root?.id } }).ListItemTag()
   },
 }

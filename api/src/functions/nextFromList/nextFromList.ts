@@ -28,31 +28,14 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
   const nextItems = []
 
   for await (const tag of tags.split(',')) {
-    logger.info({ tag })
     const itemId = await nextItemFromList({
       id,
       tag: tag.length > 0 ? tag : undefined,
     })
     const item = await listItem({ id: itemId })
-    logger.info({ item })
     nextItems.push(item)
   }
 
-  // const nextItems = tags.split(',').map(async (tag) => {
-  //   logger.info({ tag })
-  //   const itemId = await nextItemFromList({
-  //     id,
-  //     tag: tag.length > 0 ? tag : undefined,
-  //   })
-  //   const item = await listItem({ id: itemId })
-  //   logger.info({ item })
-  //   return await item
-  // })
-
-  // const nextItemId = await nextItemFromList({ id })
-
-  // const nextItem = await listItem({ id: nextItemId })
-  // for await (const item of nextItems) {
   nextItems.forEach((item) => {
     if (
       item?.webhook?.length > 10 &&
@@ -66,8 +49,6 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
       fetch(webhookWithTokens, { method: 'POST' })
     }
   })
-
-  logger.info(nextItems)
 
   return {
     statusCode: 200,

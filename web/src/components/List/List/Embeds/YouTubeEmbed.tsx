@@ -4,8 +4,6 @@ import { LiteYoutubeEmbed } from 'react-lite-yt-embed'
 function extractYoutubeIdFromUrl(url = '') {
   if (url.startsWith('https://www.youtube.com/watch?')) {
     const queryString = qs.parse(url.split('?')[1])
-    console.log({ url, queryString })
-
     return queryString.v ? String(queryString.v) : undefined
   }
 
