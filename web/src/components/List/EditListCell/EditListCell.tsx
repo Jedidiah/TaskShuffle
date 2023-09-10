@@ -147,7 +147,7 @@ export const Success = ({ list }: CellSuccessProps<EditListById>) => {
                 url: routes.shuffle({ id: list.id }),
               })
             }}
-            key="delete"
+            key="share"
           >
             <Share />
             <Text>Share</Text>
